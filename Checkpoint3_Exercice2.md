@@ -89,10 +89,47 @@ Appuyez sur Ctrl + X pour quitter l'éditeur de texte nano.
 ```bash
 systemctl restart sshd
 ```
+3. **Commandes et sorties** :
 
-NB : Bonne pratique, sauvegarder le fichier par défaut avant de le modifier  (ex `cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old).    
+```bash
+root@SRVLX01:/# nano /etc/ssh/sshd_config
+root@SRVLX01:/# systemctl restart sshd
+root@SRVLX01:/
+```
 
 
 
+NB : Bonne pratique, sauvegarder le fichier par défaut avant de le modifier  (ex `cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old`).    
 
+#### Q.2.2.2
+
+Pour autoriser l'accès à distance uniquement à mon compte personnel `karim`, j'ai modifié le fichier de configuration SSH comme suit :
+
+1. **Ouvrir le fichier de configuration SSH :**
+
+```bash
+nano /etc/ssh/sshd_config
+```
+
+<img width="352" alt="Q311a_norootconnect" src="https://github.com/user-attachments/assets/5949c983-7267-48c1-a99d-6b9d32a72afc">
+
+sauvegarder et quitter Nano : 
+
+Appuyez sur Ctrl + O, puis appuyez sur la touche Entrée pour enregistrer les modifications.
+
+Appuyez sur Ctrl + X pour quitter l'éditeur de texte nano.
+
+2. ** Redémarrage du service SSH :**
+
+```bash
+systemctl restart sshd
+```
+
+3. **Commandes et sorties** :
+
+```bash
+root@SRVLX01:/# nano /etc/ssh/sshd_config
+root@SRVLX01:/# systemctl restart sshd
+root@SRVLX01:/
+```
 
