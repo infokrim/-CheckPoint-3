@@ -83,4 +83,28 @@
 <img width="598" alt="Q112a2_createOU" src="https://github.com/user-attachments/assets/6fbc2f09-61f5-4b5e-bbfb-d6502d4cc769">    
 
 
+4. **Désactivation et déplacement du compte de Kelly Rhameur :**   
+
+   - J'ai localisé l'utilisateur **Kelly Rhameur** dans **Active Directory Users and Computers**.   
+
+   - J'ai cliqué avec le bouton droit sur **Kelly Rhameur** et sélectionné **Disable Account** pour désactiver le compte.   
+
+
+<img width="598" alt="Q112b3_move" src="https://github.com/user-attachments/assets/250cd345-d026-4276-82f6-b30bec814a6d">
+
+
+- Ensuite, j'ai cliqué avec le bouton droit sur **Kelly Rhameur** et sélectionné **Move...** pour déplacer le compte.
+
+ - J'ai sélectionné l'OU **DeactivatedUsers** dans la fenêtre de sélection et j'ai cliqué sur **OK**.
+
+
+<img width="159" alt="Q112b4_move" src="https://github.com/user-attachments/assets/d7ba9ee3-15b3-4035-a659-84585db242d3">    
+
+
+
+5. **Vérification du déplacement du compte :**    
+ 
+   - J'ai vérifié que le compte de **Kelly Rhameur** a bien été déplacé dans l'OU **DeactivatedUsers**.
+
+<img width="597" alt="Q112b5_moved" src="https://github.com/user-attachments/assets/2ef24156-892c-498c-a694-fac7605798e2">    
 
