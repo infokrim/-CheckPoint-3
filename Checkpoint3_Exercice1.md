@@ -108,3 +108,40 @@
 
 <img width="597" alt="Q112b5_moved" src="https://github.com/user-attachments/assets/2ef24156-892c-498c-a694-fac7605798e2">    
 
+
+**Q.1.1.3 Modifier le groupe de l'OU dans laquelle était Kelly Rhameur en conséquence.**    
+
+1. **Accès aux propriétés de Kelly Rhameur dans la nouvelle OU :**   
+
+   - Je suis allé(e) dans l'OU **DeactivatedUsers** où **Kelly Rhameur** a été déplacée.    
+
+   - J'ai cliqué avec le bouton droit sur **Kelly Rhameur** et sélectionné **Properties**.    
+
+<img width="598" alt="Q113b_modOU" src="https://github.com/user-attachments/assets/c70c2644-3f71-45aa-8b7f-02a8db8e49c3">   
+
+ 
+2. **Suppression des groupes de l'ancienne OU :**    
+
+   - Dans l'onglet **Member Of**, j'ai sélectionné le groupe lié à l'ancienne OU (**GrpUsersDirectionDesRessourcesHumaines**).    
+
+   - J'ai cliqué sur **Remove** pour retirer **Kelly Rhameur** de ce groupe.    
+
+
+<img width="205" alt="Q113c_remove" src="https://github.com/user-attachments/assets/0bb427a1-59e0-4093-bcaf-dda97e668281">    
+
+<img width="191" alt="Q113d_remove" src="https://github.com/user-attachments/assets/a8db01ba-a30d-44ef-8325-95c980b6401a">     
+
+
+   
+4. **Enregistrement des modifications :**
+
+   - J'ai cliqué sur **Apply** puis sur **OK** pour sauvegarder les changements.
+
+<img width="206" alt="Q113e_apply" src="https://github.com/user-attachments/assets/84dfda61-900a-47d8-a322-d863c46e597a">    
+
+<img width="204" alt="Q113f_ok" src="https://github.com/user-attachments/assets/e20ee761-18d2-458f-9298-11c72b2a002b">     
+
+
+
+
+
