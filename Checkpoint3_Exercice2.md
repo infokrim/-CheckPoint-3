@@ -40,3 +40,59 @@ Enter the new value, or press ENTER for the default
 Cette information est-elle correcte ? [O/n]o
 root@SRVLX01:/# ^C
 ```
+
+#### Q.2.1.2
+
+Voici les préconisations de sécurisation pour le compte utilisateur sur le serveur :
+
+- **Utiliser SSHv2** : S'assurer que le protocole SSHv1 est désactivé.
+- **Interdire l'accès SSH au compte root** : Modifier la configuration SSH pour `PermitRootLogin no`.
+- **Créer un utilisateur par personne ayant besoin d'un accès** : Limiter l'accès à des comptes spécifiques avec `AllowUsers`.
+- **Changer le port par défaut de SSH** : Utiliser un port non standard pour SSH.
+- **Désactiver le X11Forwarding** : Désactiver cette option dans la configuration SSH.
+- **Désactiver les connexions sans mot de passe** : Configurer `PermitEmptyPasswords no`.
+- **Réduire la durée maximale d'authentification** : Configurer `LoginGraceTime 30`.
+- **Utiliser des clés RSA de 2048 bits minimum** : Générer des clés SSH sécurisées.
+- **Activer l'option StrictModes** : Vérifier les permissions des fichiers SSH.
+
+Ces mesures permettront de renforcer significativement la sécurité du serveur.    
+
+
+### Partie 2 : Configuration de SSH
+
+#### Q.2.2.1
+
+Pour désactiver complètement l'accès à distance de l'utilisateur root, j'ai modifié le fichier de configuration SSH comme suit :
+
+1. **Ouvrir le fichier de configuration SSH :**
+
+```bash
+nano /etc/ssh/sshd_config
+```
+
+2. ** Ajout de la ligne suivante pour interdire l'accès SSH au compte root :**
+
+```bash
+PermitRootLogin no
+```
+<img width="330" alt="Q311_norootconnect" src="https://github.com/user-attachments/assets/52461b57-6830-42b9-acae-d05212aa1f98">
+
+sauvegarder et quitter Nano : 
+
+Appuyez sur Ctrl + O, puis appuyez sur la touche Entrée pour enregistrer les modifications.
+
+Appuyez sur Ctrl + X pour quitter l'éditeur de texte nano.
+
+
+2. ** Redémarrage du service SSH :**
+
+```bash
+systemctl restart sshd
+```
+
+NB : Bonne pratique, sauvegarder le fichier par défaut avant de le modifier  (ex `cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old).    
+
+
+
+
+
