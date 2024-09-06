@@ -142,13 +142,71 @@
 <img width="204" alt="Q113f_ok" src="https://github.com/user-attachments/assets/e20ee761-18d2-458f-9298-11c72b2a002b">     
 
 
-**Q.1.1.4 Créer le dossier Individuel du nouvel utilisateur et archiver celui de Kelly Rhameur en le suffixant par -ARCHIVE.**
+## Q.1.1.4 Créer le dossier individuel du nouvel utilisateur et archiver celui de Kelly Rhameur en le suffixant par "-ARCHIVE".
 
-1. Création du dossier pour **Lionel Lemarchand** :
+### 1. Création du dossier pour Lionel Lemarchand   
 
-- J'ai accédé au partage réseau **\\SRVWIN01\Users** et créé un dossier nommé **Lionel Lemarchand**.   
+- J'ai localisé le dossier *DossiersIndividuels** à l'emplacement local **F:\DossiersIndividuels**.   
 
-- J'ai configuré les permissions pour que **Lionel Lemarchand** ait un accès en lecture/écriture.    
+<img width="561" alt="Q114a_inddir" src="https://github.com/user-attachments/assets/146fc972-3351-40bb-9ccb-bc18e76086c1">    
+
+
+- J'ai créé un nouveau dossier en faisant un clic droit dans l'emplacement de stockage, puis en sélectionnant **New > Folder**.    
+
+
+<img width="597" alt="Q114b_newdir" src="https://github.com/user-attachments/assets/318828c3-9440-4805-a740-fdedd1e903cf">    
+
+
+- J'ai nommé le nouveau dossier **lionel.lemarchand**.
+
+<img width="518" alt="Q114c_newfold" src="https://github.com/user-attachments/assets/7f0aa454-0854-4ef9-860b-298f91bbc671">    
+
+
+- J'ai configuré les permissions pour que Lionel Lemarchand ait les droits appropriés :   
+
+  - J'ai fait un clic droit sur le dossier **lionel.lemarchand** et sélectionné **Properties**.   
+
+
+<img width="559" alt="Q114d_propert" src="https://github.com/user-attachments/assets/51df06ba-be3e-47a0-817d-844998d29f04">    
+
+
+
+  - Sous l'onglet **Security**, j'ai cliqué sur **Edit...** puis sur **Add...** pour ajouter **Lionel Lemarchand**.
+
+
+<img width="182" alt="Q114e_sec" src="https://github.com/user-attachments/assets/bc69ff1c-8427-4663-86af-726c6173407e">   
+
+<img width="189" alt="Q114f_sec" src="https://github.com/user-attachments/assets/e4f9e51f-d3cf-415b-ae3f-1a78f7925537">    
+
+
+  - J'ai sélectionné **Lionel Lemarchand** et configuré les permissions en cochant **Read & Execute**, **List Folder Contents**, **Read**, et **Write**.    
+
+
+<img width="189" alt="Q114f_sec" src="https://github.com/user-attachments/assets/1636ebf9-eb1d-4756-8944-c33ab923449e">
+
+<img width="180" alt="Q114g_add" src="https://github.com/user-attachments/assets/81271309-4e56-421b-a42f-5c45fa739c69">
+
+<img width="228" alt="Q114h_checkname" src="https://github.com/user-attachments/assets/a3d39043-2b4a-446d-b05c-36f8628fc475">
+
+<img width="179" alt="Q114i_droits" src="https://github.com/user-attachments/assets/9d84bbff-611a-4b49-9f2f-591962f439b8">
+
+<img width="180" alt="Q114j_droitsok" src="https://github.com/user-attachments/assets/c45676ee-e801-4873-89f2-ad340582edf1">
+
+
+
+### 2. Archivage du dossier de Kelly Rhameur   
+
+- J'ai localisé le dossier **kelly.rhameur** existant sous **F:\DossiersIndividuels**.    
+
+
+<img width="565" alt="Q114k_archivekelly" src="https://github.com/user-attachments/assets/50ffa7b0-48a7-4c2e-b3ba-dd2e9d7b03ff">
+
+
+- J'ai fait un clic droit sur **kelly.rhameur** et sélectionné **Rename** pour le renommer en **kelly.rhameur-ARCHIVE**.
+
+<img width="562" alt="Q114l_suffixe" src="https://github.com/user-attachments/assets/06446543-6288-4123-b794-59cd1e4eeaa0">    
+
+
 
 
 
