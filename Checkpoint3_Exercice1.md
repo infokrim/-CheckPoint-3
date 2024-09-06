@@ -358,4 +358,79 @@
 
 Avec ces étapes et les captures d'écran fournies, la stratégie de mot de passe sera correctement configurée et appliquée aux utilisateurs de l'OU **LabUsers** selon les critères de sécurité définis.
 
+## Q.1.3.1 Créer une GPO "Drive-Mount" qui monte les lecteurs E: et F: sur les clients  
+
+1. **Ouvrir le Gestionnaire de Stratégie de Groupe (Group Policy Management) :**   
+- Ouvrez le **Server Manager** et allez dans **Tools > Group Policy Management**.
+
+   ![Server Manager - Group Policy Management](1_newgpo.png)
+
+
+2. **Créer une nouvelle GPO :**
+
+- Dans l'arborescence du domaine **TSSR.LAN**, faites un clic droit sur l'OU **LabUsers** et sélectionnez **Create a GPO in this domain, and Link it here...**.
+
+   ![Create a new GPO](2_GPOname.png)
+
+- Nommez la nouvelle GPO **Drive-Mount** et cliquez sur **OK**.
+
+3. **Configurer la GPO pour monter les lecteurs réseau :**
+
+- Faites un clic droit sur la nouvelle GPO **Drive-Mount** et sélectionnez **Edit**.
+
+   ![Edit GPO](3_editGPO.png)
+
+- Dans l'éditeur de stratégie de groupe, naviguez vers **User Configuration > Preferences > Windows Settings > Drive Maps**.
+
+   ![Drive Maps Configuration](4_newmappeddrive.png)
+
+4. **Ajouter un nouveau lecteur mappé pour le lecteur E: :**
+
+- Faites un clic droit sur **Drive Maps** et sélectionnez **New > Mapped Drive**.
+
+   ![New Mapped Drive](5_confdrive.png)
+
+- Dans la fenêtre **New Drive Properties**, configurez les paramètres suivants :
+
+- **Action** : Update
+
+- **Location** : E:\
+
+- **Reconnect** : Coché
+
+- **Drive Letter** : E:
+
+- Cliquez sur **OK**.
+
+   ![New Drive Properties for E:](6_confnew.png)
+   
+- Dans l'onglet **Common**, cochez **Stop processing items in this extension if an error occurs**, **Run in logged-on user's security context**, et **Apply once and do not reapply**.
+
+   ![Common Tab for E:](6a_passûr.png)
+
+5. **Ajouter un nouveau lecteur mappé pour le lecteur F: :**
+
+- Répétez les mêmes étapes que pour le lecteur E:, mais configurez **Location** pour F:\ et **Drive Letter** pour F:.
+
+   ![New Drive Properties for F:](7_rebF.png)
+
+6. **Vérifier la configuration :**
+
+- Vérifiez que les lecteurs E: et F: apparaissent dans la liste sous **Drive Maps**.
+
+  ![Drive Maps Completed](8_NewFmapped.png)
+
+7. **Appliquer et lier la GPO :**
+
+- Retournez dans le **Group Policy Management**, faites un clic droit sur l'OU **LabUsers**, puis sélectionnez **Link an Existing GPO...** et choisissez **Drive-Mount**.
+
+   ![Link GPO](9_proof.png)
+   
+- Assurez-vous que la GPO est activée et appliquée correctement.
+
+8. **Vérifier l'application de la stratégie :**
+
+- Exécutez `gpupdate /force` sur un client du domaine pour appliquer les changements.
+
+- Utilisez `gpresult /r` pour vérifier que la GPO "Drive-Mount" est appliquée aux utilisateurs.
 
