@@ -142,6 +142,13 @@
 <img width="204" alt="Q113f_ok" src="https://github.com/user-attachments/assets/e20ee761-18d2-458f-9298-11c72b2a002b">     
 
 
+**Q.1.1.4 Créer le dossier Individuel du nouvel utilisateur et archiver celui de Kelly Rhameur en le suffixant par -ARCHIVE.**
+
+1. Création du dossier pour **Lionel Lemarchand** :
+
+- J'ai accédé au partage réseau **\\SRVWIN01\Users** et créé un dossier nommé **Lionel Lemarchand**.   
+
+- J'ai configuré les permissions pour que **Lionel Lemarchand** ait un accès en lecture/écriture.    
 
 
 
