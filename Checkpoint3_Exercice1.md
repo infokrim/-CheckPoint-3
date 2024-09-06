@@ -206,7 +206,61 @@
 
 <img width="562" alt="Q114l_suffixe" src="https://github.com/user-attachments/assets/06446543-6288-4123-b794-59cd1e4eeaa0">    
 
+### Partie 2 : Restriction utilisateurs
 
+**Q.1.2.1 Faire en sorte que l'utilisateur Gabriel Ghul ne puisse se connecter que du lundi au vendredi, de 7h à 17h.**
+
+1. Accéder aux propriétés de l'utilisateur Gabriel Ghul :
+
+- J'ai recherché l'utilisateur Gabriel Ghul dans Active Directory Users and Computers.
+
+<img width="257" alt="1_findGab" src="https://github.com/user-attachments/assets/3d2b035c-db63-408c-a8d7-278f72f9cd17">    
+
+
+- Ensuite, j'ai fait un clic droit sur Gabriel Ghul et sélectionné **Properties**.
+
+<img width="296" alt="2_goproperties" src="https://github.com/user-attachments/assets/570ca604-1894-4779-a015-26c39012f7a2">   
+
+
+
+2. Définir les heures de connexion autorisées :    
+
+- Dans l'onglet **Account** des propriétés de l'utilisateur, j'ai cliqué sur le bouton **Logon Hours...**.
+
+
+
+- J'ai modifié les heures de connexion en cochant les cases pour autoriser la connexion uniquement du lundi au vendredi, de 7h à 17h, et cliqué sur **OK** pour valider.    
+
+<img width="252" alt="4_modtime" src="https://github.com/user-attachments/assets/70b26543-882d-4e9e-ac67-a0542d8821d6">
+
+
+3. Appliquer les modifications :   
+
+- Cliquez sur **Apply** puis sur **OK** pour sauvegarder les changements.
+
+
+**Q.1.2.2 Bloquer la connexion de l'utilisateur au seul ordinateur CLIENT01.**    
+
+1. Définir les postes de travail autorisés :     
+
+- Toujours dans l'onglet **Account** des propriétés de l'utilisateur, cliquez sur le bouton **Log On To...**.
+
+
+<img width="204" alt="3_gabprop" src="https://github.com/user-attachments/assets/6362ef97-4efd-481c-97a7-9c5e0234b7ec">    
+
+
+- Dans la fenêtre **Logon Workstations**, sélectionnez **The following computers** et entrez le nom de l'ordinateur **CLIENT01**.
+
+- Cliquez sur **Add** puis sur **OK** pour valider.    
+
+<img width="183" alt="5_addpc" src="https://github.com/user-attachments/assets/590d5212-8de1-46ed-93b9-a7759fedec49">    
+
+
+2. Appliquer les modifications :   
+
+- Cliquez sur **Apply** puis sur **OK** pour sauvegarder les changements.   
+
+<img width="205" alt="6_apply" src="https://github.com/user-attachments/assets/1cac50fe-a644-4347-b770-0709cf4bcef0">     
 
 
 
