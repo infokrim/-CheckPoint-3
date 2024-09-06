@@ -56,6 +56,15 @@
    <img width="408" alt="Q111h-CUchangeproperties" src="https://github.com/user-attachments/assets/9e98c6b4-24d5-40be-890f-d074d8c8df9b">
 
 
+**Q.1.1.2 Créer une OU DeactivatedUsers et déplacer le compte désactivé de Kelly Rhameur dedans.**
+
+1. **Création de l'OU DeactivatedUsers :**   
+
+   - J'ai ouvert la console **Active Directory Users and Computers**.    
+   - J'ai cliqué avec le bouton droit sur le domaine **TSSR.LAN** et sélectionné **New > Organizational Unit**.    
+
+
+<img width="595" alt="Q112a_createOU" src="https://github.com/user-attachments/assets/b5f3ed5a-f4a7-4dbc-949b-2411a8d0a48c">     
 
 
 
