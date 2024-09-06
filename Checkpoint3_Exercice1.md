@@ -39,4 +39,23 @@
 
 <img width="218" alt="Q111e-createuser" src="https://github.com/user-attachments/assets/c230872c-b5b9-475e-8c11-3ee4b747bba3">     
 
+5. **Vérification et Modification des Attributs Utilisateur :**
+
+
+   1. J'ai modifié les informations dans l'onglet **General** :   
+
+   - Ajout de l'adresse e-mail : `Lionel.Lemarchand@TSSR.LAN`.    
+   
+   <img width="410" alt="Q111f-CUchangeproperties" src="https://github.com/user-attachments/assets/8ed671ce-d169-4b6d-94cb-1d30394c2839">    
+   <img width="410" alt="Q111f-CUchangeproperties" src="https://github.com/user-attachments/assets/0d7e4462-249c-41b7-a506-ee6f23eb8f44">    
+
+   2. J'ai mis à jour le **Job Title** dans l'onglet **Organization** :
+
+   - Titre de l'emploi changé en "Directeur des Ressources Humaines".
+     
+   <img width="408" alt="Q111h-CUchangeproperties" src="https://github.com/user-attachments/assets/9e98c6b4-24d5-40be-890f-d074d8c8df9b">
+
+
+
+
 
