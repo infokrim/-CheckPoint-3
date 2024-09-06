@@ -262,4 +262,100 @@
 <img width="205" alt="6_apply" src="https://github.com/user-attachments/assets/1cac50fe-a644-4347-b770-0709cf4bcef0">     
 
 
+## Q.1.2.3 Mettre en place une stratégie de mot de passe pour durcir les comptes des utilisateurs de l'OU LabUsers
+
+1. **Ouvrir le Gestionnaire de Stratégie de Groupe (Group Policy Management) :**     
+
+- Ouvrez le **Server Manager** et allez dans **Tools > Group Policy Management**.
+
+<img width="525" alt="7_GPO" src="https://github.com/user-attachments/assets/1f31bce2-9265-48cc-baa6-eb23bac2d1fc">    
+
+
+2. **Créer une nouvelle GPO :**   
+
+- Dans l'arborescence du domaine **TSSR.LAN**, faites un clic droit sur l'OU **LabUsers** et sélectionnez **Create a GPO in this domain, and Link it here...**.    
+
+<img width="432" alt="7a_gpo" src="https://github.com/user-attachments/assets/41e7ec3b-7f64-4df6-8b46-a9a989bfc20a">    
+
+
+- Nommez la nouvelle GPO **Password Policy for LabUsers** et cliquez sur **OK**.
+
+<img width="194" alt="8_newGPO" src="https://github.com/user-attachments/assets/8107e32f-e661-4631-a28a-af381ec1dc5e">    
+
+
+3. **Configurer la GPO pour la stratégie de mot de passe :**
+
+
+- Faites un clic droit sur la nouvelle GPO **Password Policy for LabUsers** et sélectionnez **Edit**.
+
+
+<img width="624" alt="9_editGPO" src="https://github.com/user-attachments/assets/66c7ccce-a0a4-42b4-b89e-da42050bf626">
+
+
+
+- Dans l'éditeur de stratégie de groupe, naviguez vers **Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy**.
+
+
+<img width="392" alt="10_PasswordPolicy" src="https://github.com/user-attachments/assets/6baa855c-93c8-49d3-abdb-59565474049d">   
+
+<img width="392" alt="11_confstarteg" src="https://github.com/user-attachments/assets/587eb3a4-345b-4a3d-92e1-12d0b74c1c35">    
+
+
+4. **Définir les paramètres de la stratégie de mot de passe :**    
+
+
+- **Enforce password history** : Double-cliquez sur cette option, cochez **Define this policy setting** et définissez **5** mots de passe à se souvenir.
+
+<img width="208" alt="12_passhist" src="https://github.com/user-attachments/assets/bcd263a0-59b9-4064-b5f6-14cac9eaebff">
+
+
+
+
+
+- **Maximum password age** : Double-cliquez sur cette option, cochez **Define this policy setting** et définissez l'âge maximal du mot de passe à **30 jours**.
+
+
+<img width="208" alt="13_passpropr" src="https://github.com/user-attachments/assets/f2925884-a2a9-47b7-be5b-9af4bf2bafe1">
+
+
+- **Minimum password age** : Double-cliquez sur cette option, cochez **Define this policy setting** et définissez l'âge minimal du mot de passe à **5 jours**.
+
+
+<img width="207" alt="15_ageminipass" src="https://github.com/user-attachments/assets/3e566923-2f6d-4c1b-868d-96b9b1ac6231">
+
+
+- **Minimum password length** : Double-cliquez sur cette option, cochez **Define this policy setting** et définissez la longueur minimale du mot de passe à **12 caractères**.
+
+<img width="206" alt="16_passlenght" src="https://github.com/user-attachments/assets/3fd3f8a1-49e4-4dd2-adb3-da2559525978">
+
+
+
+- **Password must meet complexity requirements** : Double-cliquez sur cette option, cochez **Define this policy setting** et sélectionnez **Enabled**.
+
+
+<img width="207" alt="17_passcomplex" src="https://github.com/user-attachments/assets/8ec8a6dd-6fed-4446-9df5-364233c79875">
+
+
+5. **Appliquer et propager les modifications :**
+
+- Fermez l'éditeur de stratégie de groupe et forcez une mise à jour de la stratégie de groupe en utilisant la commande `gpupdate /force` dans l'invite de commande.
+
+<img width="489" alt="18_cmdupd" src="https://github.com/user-attachments/assets/c1b91f59-7769-43d8-bd32-6704ef3291c4">
+
+
+6. **Vérifier l'application de la stratégie :**
+
+- Pour vérifier que la GPO est appliquée correctement, ouvrez une invite de commande sur un client du domaine et exécutez la commande `gpresult /r`.
+
+<img width="348" alt="19_gpresult1" src="https://github.com/user-attachments/assets/e1d5cf8b-5ccc-4e82-99c9-6303c60486ff">     
+
+<img width="349" alt="20_gpresult2" src="https://github.com/user-attachments/assets/0b47e6f9-c9b8-4aef-a53c-1ba8e87f22e2">    
+
+
+<img width="349" alt="21_gpresult3" src="https://github.com/user-attachments/assets/24bc901a-9c75-4e83-bc82-959bda4d162e">    
+
+
+
+Avec ces étapes et les captures d'écran fournies, la stratégie de mot de passe sera correctement configurée et appliquée aux utilisateurs de l'OU **LabUsers** selon les critères de sécurité définis.
+
 
