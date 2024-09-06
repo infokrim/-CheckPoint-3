@@ -67,4 +67,20 @@
 <img width="595" alt="Q112a_createOU" src="https://github.com/user-attachments/assets/b5f3ed5a-f4a7-4dbc-949b-2411a8d0a48c">     
 
 
+2. **Nommer la nouvelle OU :**   
+
+   - J'ai nommé l'unité d'organisation **DeactivatedUsers** et j'ai coché l'option **Protect container from accidental deletion** pour protéger l'OU contre toute suppression accidentelle.    
+
+   - J'ai cliqué sur **OK** pour créer l'OU.    
+
+
+<img width="217" alt="Q112a1_createOU" src="https://github.com/user-attachments/assets/962f7ce4-98cc-413d-8d36-410695ed916d">
+
+3. **Vérification de la création de l'OU :**  
+
+   - J'ai vérifié que l'OU **DeactivatedUsers** a été correctement créée dans la liste des unités d'organisation sous le domaine **TSSR.LAN**.    
+
+<img width="598" alt="Q112a2_createOU" src="https://github.com/user-attachments/assets/6fbc2f09-61f5-4b5e-bbfb-d6502d4cc769">    
+
+
 
