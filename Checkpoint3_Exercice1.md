@@ -1,12 +1,20 @@
-#exercice 1
-### Partie 1 : Gestion des utilisateurs
-**Q.1.1.1**
+# Exercice 1 : Manipulations pratiques sur VM Windows
 
-Cliquer avec le bouton droit sur "Kelly Rhameur" et choisissez "copy"  
+## Partie 1 : Gestion des utilisateurs
+
+**Q.1.1.1 Créer l'utilisateur Lionel Lemarchand avec les mêmes attributs de société que Kelly Rhameur.**
+
+1. **Copier l'utilisateur existant :**
+   - Cliquez avec le bouton droit sur **Kelly Rhameur** dans la console **Active Directory Users and Computers** et sélectionnez **Copy**.
 
 <img width="599" alt="Q111a-createuser" src="https://github.com/user-attachments/assets/4546d295-f282-4b36-a03f-4a1806f69a35">
 
-Remplir les champs (First Name, etc...), puis Next   
+2. **Créer le nouvel utilisateur :**
+   - Remplissez les champs :
+     - **First Name** : Lionel
+     - **Last Name** : Lemarchand
+     - **User Logon Name** : Lionel.Lemarchand
+   - Cliquez sur **Next**.
 
 <img width="215" alt="Q111b-createuser" src="https://github.com/user-attachments/assets/14be31f5-affd-4d36-bdb2-cf249ed3b922">   
 
