@@ -137,7 +137,36 @@ root@SRVLX01:/
 
 Pour mettre en place une authentification par clé valide et désactiver l'authentification par mot de passe, j'ai suivi les étapes suivantes :
 
-1. **Génération de la paire de clés SSH sur la machine hôte (Windows 11) avec Powershell :**
+1. **Génération de la paire de clés SSH sur la machine hôte (Windows 11) avec Powershell ou wsl :**
+
+
+```bash
+root@KRIMPC:/mnt/c/Users/Karim/.ssh# ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): /mnt/c/Users/Karim/.ssh/id_rsa
+/mnt/c/Users/Karim/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /mnt/c/Users/Karim/.ssh/id_rsa
+Your public key has been saved in /mnt/c/Users/Karim/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:xC59toA8OlpYVaZjaUnCsMN14hgcoZ7v4EaJuT6j8I0 root@KRIMPC
+The key's randomart image is:
++---[RSA 3072]----+
+| .==+ o o        |
+| o.*.= B         |
+|. = . O o        |
+|. .. = *         |
+|.+. . = S o      |
+|oo.o . o + .     |
+|oo..+     .      |
+|+=o= .           |
+|=oE..            |
++----[SHA256]-----+
+root@KRIMPC:/mnt/c/Users/Karim/.ssh#
+```
+
 
 <img width="869" alt="Q312_createkeypub" src="https://github.com/user-attachments/assets/10d4e763-1c8e-4b5f-997e-934e840bd3e5">
 
@@ -219,3 +248,4 @@ Configuration MobaXterm pour utilisation clé privé :
 
 <img width="428" alt="Q223d_mobax" src="https://github.com/user-attachments/assets/b451a9e8-13ac-4f40-92cf-3ce77d9b1933">    
 
+Il n'y a plus qu'à se connecter en SSH pour tester.   
