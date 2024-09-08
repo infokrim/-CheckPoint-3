@@ -676,10 +676,82 @@ En résumé :
 - `bareos-fd` (File Daemon) : Gère la collecte des fichiers à sauvegarder depuis les machines clientes.
 
 
+### Partie 5 : Filtrage et analyse réseau   
 
+### Q.2.5.1
 
+Pour afficher les règles actuellement appliquées sur Netfilter, j'ai utilisé la commande suivante :
 
+```bash
+root@SRVLX01:/# nft list ruleset
+```
 
+```bash
+root@SRVLX01:/# nft list ruleset
+table inet inet_filter_table {
+        chain in_chain {
+                type filter hook input priority filter; policy drop;
+                ct state established,related accept
+                ct state invalid drop
+                iifname "lo" accept
+                tcp dport 22 accept
+                ip protocol icmp accept
+                ip6 nexthdr ipv6-icmp accept
+        }
+}
+root@SRVLX01:/#
+```
+- Table inet_filter_table :
+Cette table gère les paquets pour les protocoles IPv4 et IPv6.
 
+- Chaîne in_chain :
+La chaîne in_chain applique des règles de filtrage pour le trafic entrant (hook input).
+La politique par défaut de cette chaîne est drop, ce qui signifie que tous les paquets entrants sont rejetés par défaut, sauf s'ils correspondent à l'une des règles suivantes :
+- ct state established,related accept : Autorise les paquets qui font partie de connexions établies ou connexes.
+- ct state invalid drop : Rejette les paquets dont l'état est invalide.
+- iifname "lo" accept : Autorise le trafic sur l'interface de loopback lo (local).
+- tcp dport 22 accept : Autorise les connexions TCP entrantes vers le port 22 (SSH).
+- ip protocol icmp accept : Autorise les paquets ICMP (utilisés pour le ping et les messages d'erreur réseau).
+- ip6 nexthdr ipv6-icmp accept : Autorise les paquets ICMPv6 (utilisés pour le ping et les messages d'erreur réseau en IPv6).
+
+**Les règles actuellement appliquées sur Netfilter via nftables sont configurées pour bloquer par défaut tout le trafic entrant, sauf pour :**
+
+**- Les connexions établies et connexes**
+**- Les paquets ICMP et ICMPv6**
+**- Le trafic sur le port SSH (port 22)**
+**- Le trafic sur l'interface locale (loopback)**    
+
+### Q.2.5.2   
+
+Les types de communications autorisées par les règles `nftables` actuelles sont :
+- Les connexions établies et connexes,
+- Le trafic sur l'interface locale `lo` (loopback),
+- Les connexions SSH (port 22),
+- Les paquets ICMP (pour IPv4) et ICMPv6 (pour IPv6).
+
+Toutes les autres communications sont bloquées par défaut.
+
+### Q.2.5.3  
+
+Les types de communications interdits par les règles `nftables` actuelles incluent :
+- Tout le trafic entrant qui ne correspond pas aux règles d'autorisation explicites.
+- Les paquets avec un état invalide.
+- Toutes les connexions TCP autres que celles vers le port 22 (SSH).
+- Tout autre protocole ou type de communication non explicitement autorisé (comme UDP ou d'autres ports TCP).
+
+Ces règles assurent que seul le trafic explicitement autorisé est permis, bloquant ainsi tout le reste pour renforcer la sécurité du système.
+
+### Q.2.5.4
+
+Pour autoriser Bareos à communiquer avec les clients potentiels sur l'ensemble des machines du réseau local via `nftables`, il est nécessaire d'ajouter des règles qui permettent le trafic entrant et sortant sur les ports TCP 9101 à 9103, utilisés par Bareos pour ses communications.
+
+#### Étapes pour ajouter les règles `nftables` :
+
+1. **Afficher la table `nftables` existante :**
+
+   Avant d'ajouter les règles, vérifions la table `nftables` existante :
+
+   ```bash
+   root@SRVLX01:/# nft list ruleset
 
 
