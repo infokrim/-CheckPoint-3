@@ -1030,6 +1030,7 @@ Utilisateur : invalid user wilder
 Adresse IP : 192.168.1.245    
 Port : 60438    
 
+
 - Les échecs de connexion incluent des tentatives d'accès par différents utilisateurs (par exemple, root, wilder, et des utilisateurs invalides comme admin et wildo).       
 
 - Ces tentatives proviennent de différentes adresses IP, y compris des adresses IPv4 (10.0.0.199, 192.168.1.245) et une adresse IPv6 (fd26:ba41:c8d6:0:ba92:6393:cc55:8b8d).    
