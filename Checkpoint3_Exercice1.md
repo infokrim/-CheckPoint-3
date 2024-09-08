@@ -2,7 +2,7 @@
 
 ## Partie 1 : Gestion des utilisateurs    
 
-**Q.1.1.1 Créer l'utilisateur Lionel Lemarchand avec les mêmes attributs de société que Kelly Rhameur.**    
+### **Q.1.1.1 Créer l'utilisateur Lionel Lemarchand avec les mêmes attributs de société que Kelly Rhameur.**    
 
 1. **Copier l'utilisateur existant :**    
 
@@ -64,7 +64,7 @@
 <img width="408" alt="Q111h-CUchangeproperties" src="https://github.com/user-attachments/assets/9e98c6b4-24d5-40be-890f-d074d8c8df9b">    
 
 
-**Q.1.1.2 Créer une OU DeactivatedUsers et déplacer le compte désactivé de Kelly Rhameur dedans.**    
+### **Q.1.1.2 Créer une OU DeactivatedUsers et déplacer le compte désactivé de Kelly Rhameur dedans.**    
 
 
 1. **Création de l'OU DeactivatedUsers :**    
@@ -119,7 +119,7 @@
 <img width="597" alt="Q112b5_moved" src="https://github.com/user-attachments/assets/2ef24156-892c-498c-a694-fac7605798e2">    
 
 
-**Q.1.1.3 Modifier le groupe de l'OU dans laquelle était Kelly Rhameur en conséquence.**    
+### **Q.1.1.3 Modifier le groupe de l'OU dans laquelle était Kelly Rhameur en conséquence.**    
 
 1. **Accès aux propriétés de Kelly Rhameur dans la nouvelle OU :**   
 
@@ -143,7 +143,7 @@
 
 
    
-4. **Enregistrement des modifications :**    
+3. **Enregistrement des modifications :**    
 
 - J'ai cliqué sur **Apply** puis sur **OK** pour sauvegarder les changements.     
 
@@ -152,9 +152,9 @@
 <img width="204" alt="Q113f_ok" src="https://github.com/user-attachments/assets/e20ee761-18d2-458f-9298-11c72b2a002b">     
 
 
-## Q.1.1.4 Créer le dossier individuel du nouvel utilisateur et archiver celui de Kelly Rhameur en le suffixant par "-ARCHIVE".     
+### Q.1.1.4 Créer le dossier individuel du nouvel utilisateur et archiver celui de Kelly Rhameur en le suffixant par "-ARCHIVE".     
 
-### 1. Création du dossier pour Lionel Lemarchand    
+ 1. Création du dossier pour Lionel Lemarchand    
 
 - J'ai localisé le dossier *DossiersIndividuels** à l'emplacement local **F:\DossiersIndividuels**.   
 
@@ -216,9 +216,9 @@
 
 <img width="562" alt="Q114l_suffixe" src="https://github.com/user-attachments/assets/06446543-6288-4123-b794-59cd1e4eeaa0">    
 
-### Partie 2 : Restriction utilisateurs     
+## Partie 2 : Restriction utilisateurs     
 
-**Q.1.2.1 Faire en sorte que l'utilisateur Gabriel Ghul ne puisse se connecter que du lundi au vendredi, de 7h à 17h.**      
+### **Q.1.2.1 Faire en sorte que l'utilisateur Gabriel Ghul ne puisse se connecter que du lundi au vendredi, de 7h à 17h.**      
 
 1. Accéder aux propriétés de l'utilisateur Gabriel Ghul :    
 
@@ -250,7 +250,7 @@
 - Cliquer sur **Apply** puis sur **OK** pour sauvegarder les changements.    
 
 
-**Q.1.2.2 Bloquer la connexion de l'utilisateur au seul ordinateur CLIENT01.**     
+### **Q.1.2.2 Bloquer la connexion de l'utilisateur au seul ordinateur CLIENT01.**     
 
 1. Définir les postes de travail autorisés :     
 
@@ -274,7 +274,7 @@
 <img width="205" alt="6_apply" src="https://github.com/user-attachments/assets/1cac50fe-a644-4347-b770-0709cf4bcef0">       
 
 
-## Q.1.2.3 Mettre en place une stratégie de mot de passe pour durcir les comptes des utilisateurs de l'OU LabUsers     
+### Q.1.2.3 Mettre en place une stratégie de mot de passe pour durcir les comptes des utilisateurs de l'OU LabUsers     
 
 1. **Ouvrir le Gestionnaire de Stratégie de Groupe (Group Policy Management) :**     
 
@@ -371,7 +371,7 @@
 Avec ces étapes et les captures d'écran fournies, la stratégie de mot de passe sera correctement configurée et appliquée aux utilisateurs de l'OU **LabUsers** selon les critères de sécurité définis.     
 
 
-## Q.1.3.1 Créer une GPO "Drive-Mount" qui monte les lecteurs E: et F: sur les clients     
+### Q.1.3.1 Créer une GPO "Drive-Mount" qui monte les lecteurs E: et F: sur les clients     
 
 
 1. **Ouvrir le Gestionnaire de Stratégie de Groupe (Group Policy Management) :**      
