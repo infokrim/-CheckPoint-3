@@ -250,6 +250,7 @@ Configuration MobaXterm pour utilisation clé privé :
 
 Il n'y a plus qu'à se connecter en SSH.   
 
+### Partie 3 : Analyse du stockage
 
 #### Q.2.3.1
 
@@ -484,159 +485,182 @@ unused devices: <none>
 
 Pour ajouter un nouveau volume logique LVM de 2 Gio pour héberger des sauvegardes et le monter automatiquement à chaque démarrage dans l'emplacement par défaut /var/lib/bareos/storage, j'ai suivi les étapes suivantes :    
 
-1. Liste des disques et partitions existants :
+1. Vérifier l'espace disponible dans le groupe de volumes (VG) :
 
 ```yaml
-root@SRVLX01:/# lsblk
-NAME                   MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
-sda                      8:0    0     8G  0 disk
-└─sda1                   8:1    0     8G  0 part
-  └─md0                  9:0    0     8G  0 raid1
-    ├─md0p1            259:0    0 488,3M  0 part  /boot
-    ├─md0p2            259:1    0     1K  0 part
-    └─md0p5            259:2    0   7,5G  0 part
-      ├─cp3--vg-root   253:0    0   2,8G  0 lvm   /
-      └─cp3--vg-swap_1 253:1    0   976M  0 lvm   [SWAP]
-sdb                      8:16   0     8G  0 disk
-└─md0                    9:0    0     8G  0 raid1
-  ├─md0p1              259:0    0 488,3M  0 part  /boot
-  ├─md0p2              259:1    0     1K  0 part
-  └─md0p5              259:2    0   7,5G  0 part
-    ├─cp3--vg-root     253:0    0   2,8G  0 lvm   /
-    └─cp3--vg-swap_1   253:1    0   976M  0 lvm   [SWAP]
-sdc                      8:32   0     2G  0 disk
-sr0                     11:0    1  1024M  0 rom
+root@SRVLX01:/# vgdisplay
+  --- Volume group ---
+  VG Name               cp3-vg
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               7,51 GiB
+  PE Size               4,00 MiB
+  Total PE              1923
+  Alloc PE / Size       953 / 3,72 GiB
+  Free  PE / Size       970 / <3,79 GiB
+  VG UUID               BMardR-vLO6-CToa-ad0f-XVh0-ODeS-cX7Obt
+
 root@SRVLX01:/#
 ```
+** Free  PE / Size       970 / <3,79 GiB **  
 
-2. Création d'une partition LVM sur le nouveau disque (/dev/sdc) :
+La sortie montre qu'il y a environ 3,79 Go d'espace libre dans le VG cp3-vg.    
 
-```yaml
-root@SRVLX01:/# fdisk /dev/sdc
-
-Bienvenue dans fdisk (util-linux 2.36.1).
-Les modifications resteront en mémoire jusqu'à écriture.
-Soyez prudent avant d'utiliser la commande d'écriture.
-
-Le périphérique ne contient pas de table de partitions reconnue.
-Création d'une nouvelle étiquette pour disque de type DOS avec identifiant de disque 0x9666ff4b.
-
-Commande (m pour l'aide) : n
-Type de partition
-   p   primaire (0 primaire, 0 étendue, 4 libre)
-   e   étendue (conteneur pour partitions logiques)
-Sélectionnez (p par défaut) : p
-Numéro de partition (1-4, 1 par défaut) :
-Premier secteur (2048-4194303, 2048 par défaut) :
-Dernier secteur, +/-secteurs ou +/-taille{K,M,G,T,P} (2048-4194303, 4194303 par défaut) :
-
-Une nouvelle partition 1 de type « Linux » et de taille 2 GiB a été créée.
-
-Commande (m pour l'aide) : t
-Partition 1 sélectionnée
-Code Hexa ou synonyme (taper L pour afficher tous les codes) :8e
-Type de partition « Linux » modifié en « Linux LVM ».
-
-Commande (m pour l'aide) : w
-La table de partitions a été altérée.
-Appel d'ioctl() pour relire la table de partitions.
-Synchronisation des disques.
-
-root@SRVLX01:/# 
-```
-
-3. Création du volume physique et du groupe de volumes LVM :
+2. Lister les volumes logiques existants pour choisir un nom approprié :
 
 ```yaml
-root@SRVLX01:/# pvcreate /dev/sdc1
-  Physical volume "/dev/sdc1" successfully created.
-root@SRVLX01:/# vgcreate backup-vg /dev/sdc1
-  Volume group "backup-vg" successfully created
+root@SRVLX01:/# lvs
+  LV     VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root   cp3-vg -wi-ao----  <2,77g
+  swap_1 cp3-vg -wi-ao---- 976,00m
+root@SRVLX01:/# lvdisplay cp3-vg
+  --- Logical volume ---
+  LV Path                /dev/cp3-vg/root
+  LV Name                root
+  VG Name                cp3-vg
+  LV UUID                kveJwG-MIiG-Rnyh-jFaD-S4tK-1z7G-jPtXq4
+  LV Write Access        read/write
+  LV Creation host, time cp3, 2022-12-20 10:04:20 +0100
+  LV Status              available
+  # open                 1
+  LV Size                <2,77 GiB
+  Current LE             709
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:0
+
+  --- Logical volume ---
+  LV Path                /dev/cp3-vg/swap_1
+  LV Name                swap_1
+  VG Name                cp3-vg
+  LV UUID                xGf2tz-vfjS-OXIy-uKxI-Ww2o-n5CO-j6v0WW
+  LV Write Access        read/write
+  LV Creation host, time cp3, 2022-12-20 10:04:20 +0100
+  LV Status              available
+  # open                 2
+  LV Size                976,00 MiB
+  Current LE             244
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:1
+
 root@SRVLX01:/#
 ```
+Cette commande montre qu'il y a deux volumes logiques existants : root et swap_1.
 
-4. Création d'un volume logique de 1,9 Go (en raison de l'espace légèrement inférieur à 2 Go disponible) :   
+3. Créer un nouveau volume logique nommé bareos_storage :
+
+J'ai créé un nouveau volume logique de 2 Gio nommé bareos_storage dans le VG cp3-vg avec la commande :   
 
 ```yaml
-root@SRVLX01:/# lvcreate -L 1.9G -n backup-lv backup-vg
-  Rounding up size to full physical extent 1,90 GiB
-  Logical volume "backup-lv" created.
-root@SRVLX01:/#
+lvcreate -n bareos_storage -L 2G cp3-vg
 ```
+```yaml
+root@SRVLX01:/# lvcreate -n bareos_storage -L 2G cp3-vg
+  Logical volume "bareos_storage" created.
+root@SRVLX01:/# lvs
+  LV             VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  bareos_storage cp3-vg -wi-ao----   2,00g
+  root           cp3-vg -wi-ao----  <2,77g
+  swap_1         cp3-vg -wi-ao---- 976,00m
+root@SRVLX01:/#
+```   
+Après vérification, le nouveau volume logique est bien crée.   
 
-5. Formatage du volume logique avec ext4 :
+4. Formater le volume logique avec ext4 :  
 
 ```yaml
-root@SRVLX01:/# mkfs.ext4 /dev/backup-vg/backup-lv
+root@SRVLX01:/# mkfs.ext4 /dev/cp3-vg/bareos_storage
 mke2fs 1.46.2 (28-Feb-2021)
-Creating filesystem with 498688 4k blocks and 124672 inodes
-Filesystem UUID: e1d07495-26c0-4d81-9730-16289abc0208
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 39b7b091-62cd-4128-a5ff-940c421e1496
 Superblock backups stored on blocks:
         32768, 98304, 163840, 229376, 294912
 
 Allocating group tables: done
 Writing inode tables: done
-Creating journal (8192 blocks): done
+Creating journal (16384 blocks): done
 Writing superblocks and filesystem accounting information: done
 
 root@SRVLX01:/#
 ```
 
-6. Montage du volume logique sur /var/lib/bareos/storage :
+
+
+5. Vérifier la présence du répertoire de destination et monter le volume logique :
+
+J'ai vérifié que le répertoire /var/lib/bareos/storage existait déjà, puis j'ai monté le volume logique dans ce répertoire :
 
 ```yaml
 root@SRVLX01:/# ls /var/lib/bareos/
 bareos-dir.9101.state  bareos-dir.conmsg  bareos.sql  dbconfig-common  storage
-root@SRVLX01:/# mount /dev/backup-vg/backup-lv /var/lib/bareos/storage
+root@SRVLX01:/# mount /dev/cp3-vg/bareos_storage /var/lib/bareos/storage
+root@SRVLX01:/# df -h /var/lib/bareos/storage
+Sys. de fichiers                   Taille Utilisé Dispo Uti% Monté sur
+/dev/mapper/cp3--vg-bareos_storage   2,0G     24K  1,8G   1% /var/lib/bareos/storage
 root@SRVLX01:/# 
 ```
 
-7. Ajout de l'entrée dans /etc/fstab pour le montage automatique au démarrage :
+6. Vérifier que le volume est monté correctement :
 
-Modification du fichier /etc/fstab en ajoutant la ligne :   
-
-```
-/dev/backup-vg/backup-lv /var/lib/bareos/storage ext4 defaults 0 2
-```
-
-<img width="468" alt="3_addvolfstab" src="https://github.com/user-attachments/assets/3beabb27-626a-4ad5-bbdc-30ef50b04894">    
-
-8. Vérification du montage automatique :
-
-```bash
-root@SRVLX01:/# mount -a
+```yaml
 root@SRVLX01:/# df -h /var/lib/bareos/storage
-Sys. de fichiers                  Taille Utilisé Dispo Uti% Monté sur
-/dev/mapper/backup--vg-backup--lv   1,9G     24K  1,8G   1% /var/lib/bareos/storage
+Sys. de fichiers                   Taille Utilisé Dispo Uti% Monté sur
+/dev/mapper/cp3--vg-bareos_storage   2,0G     24K  1,8G   1% /var/lib/bareos/storage
 root@SRVLX01:/#
 ```
+La sortie montre que le volume est monté avec succès.   
+
+7. Ajouter le montage au fichier /etc/fstab pour le montage automatique au démarrage et vérifier la configuration de /etc/fstab en testant le montage :
+
+J'ai exécuté la commande suivante pour vérifier que tout était c
+
+Pour assurer le montage automatique du volume au démarrage, j'ai ajouté l'entrée correspondante dans le fichier /etc/fstab :    
+
+```
+root@SRVLX01:/# echo '/dev/cp3-vg/bareos_storage /var/lib/bareos/storage ext4 defaults 0 2' >> /etc/fstab
+root@SRVLX01:/# mount -a
+root@SRVLX01:/# 
+```
+Aucune erreur n'a été retournée, confirmant que la configuration est correcte.   
+
+Ayant déjà eu des ennuis de corruption de fichier fstab dans le passé, j'ai quand même tenu à vérifier le contenu du fichier fstab même si le test de montage automatique s'est effectué avec succès.
 
 ```bash
-root@SRVLX01:/# lsblk -f
-NAME                      FSTYPE            FSVER    LABEL UUID                                   FSAVAIL FSUSE% MOUNTPOINT
-sda
-└─sda1                    linux_raid_member 1.2      cp3:0 32332561-cf16-c858-7035-17e881dd5c10
-  └─md0
-    ├─md0p1               ext2              1.0            9bba6d48-3e4b-42a6-bccc-12836de215ec    397,3M    10% /boot
-    ├─md0p2
-    └─md0p5               LVM2_member       LVM2 001       tlCGJ2-LG5u-kWGc-8kuO-wAiU-icBu-07BEcN
-      ├─cp3--vg-root      ext4              1.0            bbc31a37-8e49-47fe-8fad-a3fe18919fdd        1G    56% /
-      └─cp3--vg-swap_1    swap              1              8220bf51-2675-4203-91af-1c149f717652                  [SWAP]
-sdb                       linux_raid_member 1.2      cp3:0 32332561-cf16-c858-7035-17e881dd5c10
-└─md0
-  ├─md0p1                 ext2              1.0            9bba6d48-3e4b-42a6-bccc-12836de215ec    397,3M    10% /boot
-  ├─md0p2
-  └─md0p5                 LVM2_member       LVM2 001       tlCGJ2-LG5u-kWGc-8kuO-wAiU-icBu-07BEcN
-    ├─cp3--vg-root        ext4              1.0            bbc31a37-8e49-47fe-8fad-a3fe18919fdd        1G    56% /
-    └─cp3--vg-swap_1      swap              1              8220bf51-2675-4203-91af-1c149f717652                  [SWAP]
-sdc
-└─sdc1                    LVM2_member       LVM2 001       6uR7wa-gOrN-WZPZ-50JE-Kylo-Pdto-8522s0
-  └─backup--vg-backup--lv ext4              1.0            e1d07495-26c0-4d81-9730-16289abc0208      1,7G     0% /var/lib/bareos/storage
-sr0
+root@SRVLX01:/# cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# systemd generates mount units based on this file, see systemd.mount(5).
+# Please run 'systemctl daemon-reload' after making changes here.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+/dev/mapper/cp3--vg-root /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/md0p1 during installation
+UUID=9bba6d48-3e4b-42a6-bccc-12836de215ec /boot           ext2    defaults        0       2
+/dev/mapper/cp3--vg-swap_1 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+/dev/cp3-vg/bareos_storage /var/lib/bareos/storage ext4 defaults 0 2
 root@SRVLX01:/#
 ```
-
-Le volume logique de 1,9 Go a été créé avec succès, formaté en ext4 et monté automatiquement sur /var/lib/bareos/storage au démarrage.
+Le contenu est correct.    
 
 ### Q.2.3.5
 
@@ -647,12 +671,16 @@ root@SRVLX01:/# vgs
 ```   
 ```bash
 root@SRVLX01:/# vgs
-  VG        #PV #LV #SN Attr   VSize  VFree
-  backup-vg   1   1   0 wz--n- <2,00g 96,00m
-  cp3-vg      1   2   0 wz--n-  7,51g <3,79g
+  VG     #PV #LV #SN Attr   VSize VFree
+  cp3-vg   1   3   0 wz--n- 7,51g <1,79g
 root@SRVLX01:/#
 ```
-**Il reste 96 Mo d'espace libre dans le groupe de volume backup-vg.**   
+- VG Name (Nom du VG) : cp3-vg
+- #LV : 3 volumes logiques sont présents dans ce VG.
+- VSize (Taille totale du VG) : 7,51 GiB.
+- VFree (Espace libre dans le VG) : <1,79 GiB.
+
+**Cela montre qu'il reste environ 1,79 Go d'espace libre dans le groupe de volumes cp3-vg après la création du nouveau volume logique bareos_storage.**   
 
 
 ### Partie 4 : Sauvegardes
@@ -662,18 +690,13 @@ root@SRVLX01:/#
 Les trois composants Bareos installés sur la VM et leurs rôles respectifs sont :
 
 **bareos-dir (Director)**  
-Le `bareos-dir` est le chef d'orchestre de l'ensemble du système de sauvegarde. Il est responsable de la planification, du contrôle et du lancement des tâches de sauvegardes. Le Director coordonne les interactions entre les autres composants (`bareos-fd` et `bareos-sd`) pour effectuer les opérations de sauvegarde et de restauration.
+Le `bareos-dir` Coordonne les sauvegardes et restaurations, planifie et contrôle les tâches.    
 
 **bareos-sd (Storage Daemon)**  
-Le `bareos-sd` est chargé de gérer le stockage des données de sauvegarde. Il reçoit les données envoyées par le `bareos-fd` (File Daemon) et les écrit sur les supports de stockage configurés (disques, bandes magnétiques, etc.). Ce composant peut également être utilisé pour lire les données pendant les restaurations.
+Le `bareos-sd` Gère le stockage des données de sauvegarde sur les supports configurés.    
 
 **bareos-fd (File Daemon)**  
-Le `bareos-fd` est installé sur chaque machine dont les données doivent être sauvegardées. Il est responsable de la collecte des fichiers et des données à sauvegarder et de leur envoi au `bareos-sd` (Storage Daemon). Le File Daemon communique directement avec le `bareos-dir` pour exécuter les tâches de sauvegarde programmées.
-
-En résumé :
-- `bareos-dir` (Director) : Coordonne les sauvegardes et les restaurations.
-- `bareos-sd` (Storage Daemon) : Gère l'écriture et la lecture des données sur les supports de stockage.
-- `bareos-fd` (File Daemon) : Gère la collecte des fichiers à sauvegarder depuis les machines clientes.
+Le `bareos-fd` Collecte les fichiers à sauvegarder depuis les machines et les envoie au Storage Daemon.    
 
 
 ### Partie 5 : Filtrage et analyse réseau   
