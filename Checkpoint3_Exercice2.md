@@ -881,3 +881,76 @@ root@SRVLX01:/#
 
 nft add rule inet inet_filter_table in_chain tcp dport {9101, 9102, 9103} accept
 ```
+
+### Partie 5 : Filtrage et analyse réseau   
+
+```bash   
+root@SRVLX01:/# journalctl _COMM=sshd | grep "Failed password" | tail -n 10
+janv. 03 11:06:30 cp3 sshd[1157]: Failed password for root from 10.0.0.199 port 44822 ssh2
+janv. 03 11:06:45 cp3 sshd[1161]: Failed password for wilder from 10.0.0.199 port 33608 ssh2
+janv. 03 11:23:03 cp3 sshd[1227]: Failed password for invalid user admin from 10.0.0.199 port 39302 ssh2
+janv. 03 11:23:34 cp3 sshd[1231]: Failed password for root from 10.0.0.199 port 33154 ssh2
+janv. 03 11:23:40 cp3 sshd[1231]: Failed password for root from 10.0.0.199 port 33154 ssh2
+janv. 03 11:23:44 cp3 sshd[1231]: Failed password for root from 10.0.0.199 port 33154 ssh2
+janv. 03 12:09:28 cp3 sshd[1587]: Failed password for invalid user wildo from fd26:ba41:c8d6:0:ba92:6393:cc55:8b8d port 39874 ssh2
+janv. 03 12:09:34 cp3 sshd[1587]: Failed password for invalid user wildo from fd26:ba41:c8d6:0:ba92:6393:cc55:8b8d port 39874 ssh2
+sept. 06 20:18:25 SRVLX01 sshd[1426]: Failed password for invalid user wilder from 192.168.1.245 port 60438 ssh2
+sept. 06 20:18:53 SRVLX01 sshd[1426]: Failed password for invalid user wilder from 192.168.1.245 port 60438 ssh2
+root@SRVLX01:/#
+```
+Analyse des  10 Derniers Échecs de Connexion :   
+
+Date et Heure : janv. 03 11:06:30
+Utilisateur : root
+Adresse IP : 10.0.0.199
+Port : 44822
+
+Date et Heure : janv. 03 11:06:45
+Utilisateur : wilder
+Adresse IP : 10.0.0.199
+Port : 33608
+
+Date et Heure : janv. 03 11:23:03
+Utilisateur : invalid user admin
+Adresse IP : 10.0.0.199
+Port : 39302
+
+Date et Heure : janv. 03 11:23:34
+Utilisateur : root
+Adresse IP : 10.0.0.199
+Port : 33154
+
+Date et Heure : janv. 03 11:23:40
+Utilisateur : root
+Adresse IP : 10.0.0.199
+Port : 33154
+
+Date et Heure : janv. 03 11:23:44
+Utilisateur : root
+Adresse IP : 10.0.0.199
+Port : 33154
+
+Date et Heure : janv. 03 12:09:28
+Utilisateur : invalid user wildo
+Adresse IP : fd26:ba41:c8d6:0:ba92:6393:cc55:8b8d (IPv6)
+Port : 39874
+
+Date et Heure : janv. 03 12:09:34
+Utilisateur : invalid user wildo
+Adresse IP : fd26:ba41:c8d6:0:ba92:6393:cc55:8b8d (IPv6)
+Port : 39874
+
+Date et Heure : sept. 06 20:18:25
+Utilisateur : invalid user wilder
+Adresse IP : 192.168.1.245
+Port : 60438
+
+Date et Heure : sept. 06 20:18:53
+Utilisateur : invalid user wilder
+Adresse IP : 192.168.1.245
+Port : 60438  
+
+- Les échecs de connexion incluent des tentatives d'accès par différents utilisateurs (par exemple, root, wilder, et des utilisateurs invalides comme admin et wildo).   
+- Ces tentatives proviennent de différentes adresses IP, y compris des adresses IPv4 (10.0.0.199, 192.168.1.245) et une adresse IPv6 (fd26:ba41:c8d6:0:ba92:6393:cc55:8b8d). - Plusieurs tentatives sont répétées sur le même port, indiquant peut-être une tentative de force brute ou une mauvaise configuration.
+
+
