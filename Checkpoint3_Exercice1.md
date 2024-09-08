@@ -247,22 +247,22 @@
 
 3. Appliquer les modifications :    
 
-- Cliquez sur **Apply** puis sur **OK** pour sauvegarder les changements.    
+- Cliquer sur **Apply** puis sur **OK** pour sauvegarder les changements.    
 
 
 **Q.1.2.2 Bloquer la connexion de l'utilisateur au seul ordinateur CLIENT01.**     
 
 1. Définir les postes de travail autorisés :     
 
-- Toujours dans l'onglet **Account** des propriétés de l'utilisateur, cliquez sur le bouton **Log On To...**.    
+- Toujours dans l'onglet **Account** des propriétés de l'utilisateur, cliquer sur le bouton **Log On To...**.    
 
 
 <img width="204" alt="3_gabprop" src="https://github.com/user-attachments/assets/6362ef97-4efd-481c-97a7-9c5e0234b7ec">     
 
 
-- Dans la fenêtre **Logon Workstations**, sélectionnez **The following computers** et entrez le nom de l'ordinateur **CLIENT01**.    
+- Dans la fenêtre **Logon Workstations**, sélectionnez **The following computers** et entrer le nom de l'ordinateur **CLIENT01**.    
 
-- Cliquez sur **Add** puis sur **OK** pour valider.     
+- Cliquer sur **Add** puis sur **OK** pour valider.     
 
 <img width="183" alt="5_addpc" src="https://github.com/user-attachments/assets/590d5212-8de1-46ed-93b9-a7759fedec49">     
  
@@ -278,14 +278,14 @@
 
 1. **Ouvrir le Gestionnaire de Stratégie de Groupe (Group Policy Management) :**     
 
-- Ouvrez le **Server Manager** et allez dans **Tools > Group Policy Management**.    
+- Ouvrir le **Server Manager** et aller dans **Tools > Group Policy Management**.    
 
 <img width="525" alt="7_GPO" src="https://github.com/user-attachments/assets/1f31bce2-9265-48cc-baa6-eb23bac2d1fc">     
 
 
 2. **Créer une nouvelle GPO :**    
 
-- Dans l'arborescence du domaine **TSSR.LAN**, faites un clic droit sur l'OU **LabUsers** et sélectionnez **Create a GPO in this domain, and Link it here...**.     
+- Dans l'arborescence du domaine **TSSR.LAN**, faire un clic droit sur l'OU **LabUsers** et sélectionner **Create a GPO in this domain, and Link it here...**.     
 
 <img width="432" alt="7a_gpo" src="https://github.com/user-attachments/assets/41e7ec3b-7f64-4df6-8b46-a9a989bfc20a">     
 
@@ -433,7 +433,7 @@ Avec ces étapes et les captures d'écran fournies, la stratégie de mot de pass
 
 - **Drive Letter** : E:    
 
-- Cliquez sur **OK**.     
+- Cliquer sur **OK**.     
 
 
 <img width="198" alt="6_confnew" src="https://github.com/user-attachments/assets/db980a1d-57e6-43c5-8116-a9803b993a76">     
@@ -443,7 +443,7 @@ Avec ces étapes et les captures d'écran fournies, la stratégie de mot de pass
 
 5. **Ajouter un nouveau lecteur mappé pour le lecteur F: :**     
 
-- Répétez les mêmes étapes que pour le lecteur E:, mais configurez **Location** pour F:\ et **Drive Letter** pour F:.    
+- Répéter les mêmes étapes que pour le lecteur E:, mais configurer **Location** pour F:\ et **Drive Letter** pour F:.    
 
 
 <img width="200" alt="7_rebF" src="https://github.com/user-attachments/assets/669b3ccb-5e30-450b-aed2-a9b5c6fcc011">    
@@ -451,23 +451,23 @@ Avec ces étapes et les captures d'écran fournies, la stratégie de mot de pass
 
 6. **Vérifier la configuration :**    
 
-- Vérifiez que les lecteurs E: et F: apparaissent dans la liste sous **Drive Maps**.    
+- Vérifier que les lecteurs E: et F: apparaissent dans la liste sous **Drive Maps**.    
 
 
 7. **Appliquer et lier la GPO :**    
 
-- Retournez dans le **Group Policy Management**, faites un clic droit sur l'OU **LabUsers**, puis sélectionnez **Link an Existing GPO...** et choisissez **Drive-Mount**.     
+- Retourner dans le **Group Policy Management**, faire un clic droit sur l'OU **LabUsers**, puis sélectionner **Link an Existing GPO...** et choisir **Drive-Mount**.     
 
 <img width="391" alt="9_proof" src="https://github.com/user-attachments/assets/1e3c9202-4dec-4e18-9d7f-10eb4e1384ee">     
 
 
    
-- Assurez-vous que la GPO est activée et appliquée correctement.    
+- Vérifier que la GPO est activée et appliquée correctement.    
 
 
 8. **Vérifier l'application de la stratégie :**    
 
-- Exécutez `gpupdate /force` sur un client du domaine pour appliquer les changements.    
+- Exécuter `gpupdate /force` sur un client du domaine pour appliquer les changements.    
 
-- Utilisez `gpresult /r` pour vérifier que la GPO "Drive-Mount" est appliquée aux utilisateurs.    
+- Utiliser `gpresult /r` pour vérifier que la GPO "Drive-Mount" est appliquée aux utilisateurs.    
 
