@@ -728,16 +728,15 @@ root@SRVLX01:/#
 Cette table gère les paquets pour les protocoles IPv4 et IPv6.
 
 - Chaîne in_chain :
-La chaîne in_chain applique des règles de filtrage pour le trafic entrant (hook input).
-La politique par défaut de cette chaîne est drop, ce qui signifie que tous les paquets entrants sont rejetés par défaut, sauf s'ils correspondent à l'une des règles suivantes :
+Filtrage du trafic entrant avec une politique par défaut drop.
 - ct state established,related accept : Autorise les paquets qui font partie de connexions établies ou connexes.
 - ct state invalid drop : Rejette les paquets dont l'état est invalide.
 - iifname "lo" accept : Autorise le trafic sur l'interface de loopback lo (local).
 - tcp dport 22 accept : Autorise les connexions TCP entrantes vers le port 22 (SSH).
-- ip protocol icmp accept : Autorise les paquets ICMP (utilisés pour le ping et les messages d'erreur réseau).
-- ip6 nexthdr ipv6-icmp accept : Autorise les paquets ICMPv6 (utilisés pour le ping et les messages d'erreur réseau en IPv6).
+- ip protocol icmp accept : Autorise les paquets ICMP.
+- ip6 nexthdr ipv6-icmp accept : Autorise les paquets ICMPv6 .
 
-**Les règles actuellement appliquées sur Netfilter via nftables sont configurées pour bloquer par défaut tout le trafic entrant, sauf pour :**
+**Les règles appliquées sur Netfilter via nftables bloquent par défaut tout le trafic entrant, sauf pour :**
 
 **- Les connexions établies et connexes**
 **- Les paquets ICMP et ICMPv6**
@@ -764,17 +763,121 @@ Les types de communications interdits par les règles `nftables` actuelles inclu
 
 Ces règles assurent que seul le trafic explicitement autorisé est permis, bloquant ainsi tout le reste pour renforcer la sécurité du système.
 
-### Q.2.5.4
+### Q.2.5.4 Ajouter les règles nécessaires pour autoriser Bareos
 
-Pour autoriser Bareos à communiquer avec les clients potentiels sur l'ensemble des machines du réseau local via `nftables`, il est nécessaire d'ajouter des règles qui permettent le trafic entrant et sortant sur les ports TCP 9101 à 9103, utilisés par Bareos pour ses communications.
+Pour autoriser Bareos à communiquer avec les clients sur le réseau local en utilisant les ports TCP 9101 à 9103, voici les étapes que j'ai suivies :  
+ 
 
-#### Étapes pour ajouter les règles `nftables` :
+- Vérifier les règles appliquées :
+J'ai utilisé la commande suivante pour lister les règles nftables actuellement appliquées :
 
-1. **Afficher la table `nftables` existante :**
+```bash
+nft list ruleset
+```
+  
+- Faire une copie de sauvegarde du fichier de configuration :
+Avant de modifier quoi que ce soit, j'ai créé une copie de sauvegarde du fichier de configuration :
 
-   Avant d'ajouter les règles, vérifions la table `nftables` existante :
 
-   ```bash
-   root@SRVLX01:/# nft list ruleset
+```bash
+cp /etc/nftables.conf /etc/nftables.conf.old
+```
 
+- Ajouter les Règles pour Bareos :
 
+```bash
+nft add rule inet inet_filter_table in_chain tcp dport {9101, 9102, 9103} accept
+```
+
+- Vérifier que les Règles sont Appliquées Correctement :
+
+```bash
+nft list ruleset
+```
+
+- Connexion à l'adresse IP locale (127.0.0.1) sur les ports 9102 et 9103 :
+
+Les commandes telnet 127.0.0.1 9102 et telnet 127.0.0.1 9103 ont également réussi à établir une connexion sur les ports 9102 et 9103 respectivement.
+Les messages "Connected to 127.0.0.1" indiquent que le serveur Bareos accepte les connexions sur ces ports en local.
+ 
+
+```bash
+root@SRVLX01:/#  telnet 192.168.1.200 9101
+Trying 192.168.1.200...
+Connected to 192.168.1.200.
+Escape character is '^]'.
+^]
+▒Connection closed by foreign host.
+root@SRVLX01:/# telnet 127.0.0.1 9102
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+^]
+▒Connection closed by foreign host.
+root@SRVLX01:/# telnet 127.0.0.1 9103
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+^]
+▒Connection closed by foreign host.
+root@SRVLX01:/#
+```
+Les tests de connectivité confirment que :
+
+Les règles nftables autorisent bien le trafic sur les ports 9101, 9102, et 9103, permettant ainsi à Bareos de communiquer correctement.
+
+```bash
+root@SRVLX01:/# cp /etc/nftables.conf /etc/nftables.conf.old
+root@SRVLX01:/# nft flush ruleset
+root@SRVLX01:/# nft add rule inet inet_filter_table in_chain tcp dport {9101, 9102, 9103} accept
+root@SRVLX01:/# nft -f /etc/nftables.conf
+root@SRVLX01:/# nft list ruleset
+table inet inet_filter_table {
+        chain in_chain {
+                type filter hook input priority filter; policy drop;
+                ct state established,related accept
+                ct state invalid drop
+                iifname "lo" accept
+                tcp dport 22 accept
+                ip protocol icmp accept
+                ip6 nexthdr ipv6-icmp accept
+                tcp dport { 9101, 9102, 9103 } accept
+        }
+}
+root@SRVLX01:/# cat /etc/nftables.conf
+table inet inet_filter_table {
+        chain in_chain {
+                type filter hook input priority filter; policy drop;
+                ct state established,related accept
+                ct state invalid drop
+                iifname "lo" accept
+                tcp dport 22 accept
+                ip protocol icmp accept
+                ip6 nexthdr ipv6-icmp accept
+                tcp dport { 9101, 9102, 9103 } accept
+        }
+}
+root@SRVLX01:/# telnet <adresse_IP_client> 9101
+bash: adresse_IP_client: Aucun fichier ou dossier de ce type
+root@SRVLX01:/#  telnet 192.168.1.200 9101
+Trying 192.168.1.200...
+Connected to 192.168.1.200.
+Escape character is '^]'.
+^]
+▒Connection closed by foreign host.
+root@SRVLX01:/# telnet 127.0.0.1 9102
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+^]
+▒Connection closed by foreign host.
+root@SRVLX01:/# telnet 127.0.0.1 9103
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+^]
+▒Connection closed by foreign host.
+root@SRVLX01:/#
+
+nft add rule inet inet_filter_table in_chain tcp dport {9101, 9102, 9103} accept
+```
